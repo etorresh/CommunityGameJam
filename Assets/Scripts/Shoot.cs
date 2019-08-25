@@ -13,6 +13,7 @@ public class Shoot : MonoBehaviour
     public int ammo = 10;
     public float fireRate = 1f;
     public float bulletRotate;
+    public float recoilForce = 1f;
     private float nextFire;
 
     private bool shoot;
@@ -47,18 +48,19 @@ public class Shoot : MonoBehaviour
 
         Vector3 difference = target - bulletGuide.transform.position;
         float rotationZ = Mathf.Atan2(difference.y, difference.x) * Mathf.Rad2Deg;
+        // Usar esto para causar fuerza al lado contrario
         bulletGuide.transform.rotation = Quaternion.Euler(0.0f, 0.0f, rotationZ);
 
         if (shoot)
         {
-            print("yeet");
             float distance = difference.magnitude;
             Vector2 direction = difference / distance;
             direction.Normalize();
    
             GameObject b = Instantiate(bullet, player.transform.position, Quaternion.Euler(0f, 0f, rotationZ)) as GameObject;
             b.GetComponent<Rigidbody>().velocity = direction * bulletSpeed;
-            b.transform.Rotate(0f, 0f, bulletRotate);
+            player.GetComponent<Rigidbody2D>().AddForce(-direction * recoilForce);
+            b.GetComponent<Rigidbody>().AddTorque(1f * bulletRotate, 1f * bulletRotate, 1f * bulletRotate);
 
             shoot = false;
         }
