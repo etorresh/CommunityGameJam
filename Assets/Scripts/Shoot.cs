@@ -5,6 +5,7 @@ using UnityEngine;
 public class Shoot : MonoBehaviour
 {
     private Vector3 target;
+    public CameraPos cPos;
     public GameObject crosshair;
     public GameObject bullet;
     public GameObject bulletGuide;
@@ -44,11 +45,9 @@ public class Shoot : MonoBehaviour
     {
         target = GetComponent<Camera>().ScreenToWorldPoint(new Vector3(mouseX, mouseY, transform.position.z));
         target.z = crosshair.transform.position.z;
-        crosshair.transform.position = target;
 
         Vector3 difference = target - bulletGuide.transform.position;
         float rotationZ = Mathf.Atan2(difference.y, difference.x) * Mathf.Rad2Deg;
-        // Usar esto para causar fuerza al lado contrario
         bulletGuide.transform.rotation = Quaternion.Euler(0.0f, 0.0f, rotationZ);
 
         if (shoot)
@@ -64,5 +63,12 @@ public class Shoot : MonoBehaviour
 
             shoot = false;
         }
+    }
+
+    private void LateUpdate()
+    {
+        target = GetComponent<Camera>().ScreenToWorldPoint(new Vector3(mouseX, mouseY, transform.position.z));
+        target.z = crosshair.transform.position.z;
+        crosshair.transform.position = target;
     }
 }
