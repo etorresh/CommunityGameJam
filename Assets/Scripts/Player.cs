@@ -20,7 +20,6 @@ public class Player : MonoBehaviour
     private void Start()
     {
         time = GetComponent<Renderer>().material.GetFloat("_Vector1_F66CC4A5");
-        print(time);
     }
 
     void Update()
