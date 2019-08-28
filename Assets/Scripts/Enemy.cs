@@ -16,9 +16,6 @@ public class Enemy : MonoBehaviour
 
     void Update()
     {
-        if(Vector3.Distance(transform.position, player.position) >  stoppingDistance)
-        {
-            transform.position = Vector3.MoveTowards(transform.position, player.position, speed * Time.deltaTime);
-        }
+        transform.position = Vector3.MoveTowards(transform.position, player.position, speed * Time.deltaTime);
     }
 }
