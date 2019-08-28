@@ -8,24 +8,48 @@ public class Player : MonoBehaviour
     private float moveVertical;
     public float moveSpeed = 10;
     public float rotateSpeed = 1;
-    private float time;
+    private float timeDead = 0;
+    public bool dead = false;
+    public Shoot sh;
 
     private Rigidbody2D rb2;
+
+    public Enemy en;
+    public CameraPos camPos;
 
     void Awake()
     {
         rb2 = GetComponent<Rigidbody2D>();
     }
 
-    private void Start()
-    {
-        time = GetComponent<Renderer>().material.GetFloat("_Vector1_F66CC4A5");
-    }
-
     void Update()
     {
         moveHorizontal = Input.GetAxisRaw("Horizontal");
         moveVertical = Input.GetAxisRaw("Vertical");
+    }
+
+    public IEnumerator LoseAnimation()
+    {
+        moveSpeed = 0;
+        rotateSpeed = 0;
+        en.speed = 0;
+        sh.ammo = 0;
+        dead = true;
+        camPos.transition = true;
+
+        while (true)
+        {
+            if (timeDead < 1)
+            {
+                timeDead += 0.010f;
+                GetComponent<Renderer>().material.SetFloat("_Vector1_F66CC4A5", timeDead);
+                yield return new WaitForSeconds(0.05f);
+            }
+            else
+            {
+                yield return null;
+            }
+        }
     }
 
     void FixedUpdate()
