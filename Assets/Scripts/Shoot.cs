@@ -11,7 +11,7 @@ public class Shoot : MonoBehaviour
     public GameObject bulletGuide;
     public GameObject player;
     public float bulletSpeed = 20;
-    public int ammo = 10;
+    public int ammo = 1;
     public float fireRate = 1f;
     public float bulletRotate;
     public float recoilForce = 1f;

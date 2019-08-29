@@ -14,7 +14,6 @@ public class Player : MonoBehaviour
 
     private Rigidbody2D rb2;
 
-    public Enemy en;
     public CameraPos camPos;
 
     void Awake()
@@ -32,7 +31,6 @@ public class Player : MonoBehaviour
     {
         moveSpeed = 0;
         rotateSpeed = 0;
-        en.speed = 0;
         sh.ammo = 0;
         dead = true;
         camPos.transition = true;
