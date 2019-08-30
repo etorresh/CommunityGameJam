@@ -6,6 +6,7 @@ TagManager:
   tags:
   - Border
   - Enemy
+  - StaticEnemy
   layers:
   - Default
   - TransparentFX

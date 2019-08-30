@@ -4,11 +4,13 @@ using UnityEngine;
 
 public class EnemyKill : MonoBehaviour
 {
+    public Player player;
     private void OnCollisionEnter2D(Collision2D collision)
     {
         if (collision.gameObject.CompareTag("Player"))
         {
-            StartCoroutine(collision.gameObject.GetComponent<Player>().LoseAnimation());
+            player.StartCoroutine(player.LoseAnimation());
+            collision.gameObject.GetComponent<Collider2D>().enabled = false;
         }
     }
 }
