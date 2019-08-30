@@ -5,14 +5,16 @@ using UnityEngine;
 public class Enemy : MonoBehaviour
 {
     public GameObject crackedEnemy;
-    public float speed, stoppingDistance, retreatDistance;
+    public float speed;
     public Transform player;
+    public Player playerComp;
     public Shoot sh;
+    public bool scared;
 
     public void Hit()
     {
-        sh.ammo += 1;
         Instantiate(crackedEnemy, transform.position, transform.rotation);
+        playerComp.AddKill();
         Destroy(gameObject);
     }
 

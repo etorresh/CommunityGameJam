@@ -95,10 +95,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   crackedEnemy: {fileID: 4111433147521896620, guid: c13a93c0645fb5942b00458ab0570121,
     type: 3}
-  speed: 1
-  stoppingDistance: 1
-  retreatDistance: 1
+  speed: 3
   player: {fileID: 0}
+  playerComp: {fileID: 0}
   sh: {fileID: 0}
 --- !u!54 &187392940
 Rigidbody:
@@ -222,3 +221,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d9fd7f861fa0f734db5e4eb5d0204382, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  player: {fileID: 0}
+  vulnerable: 0

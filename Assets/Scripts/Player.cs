@@ -5,12 +5,16 @@ using UnityEngine.SceneManagement;
 
 public class Player : MonoBehaviour
 {
+    public string CurrentLevel, nextLevel;
     private float moveHorizontal;
     private float moveVertical;
     public float moveSpeed = 10;
     public float rotateSpeed = 1;
     private float timeDead = 0;
     private bool rotate = true;
+
+    public int killObjetive;
+    public int killCount;
 
     public Shoot sh;
 
@@ -29,16 +33,32 @@ public class Player : MonoBehaviour
         moveVertical = Input.GetAxisRaw("Vertical");
     }
 
+    public void AddKill()
+    {
+        killCount += 1;
+        if(sh.needsAmmo && sh.ammo == 0 && killCount != killObjetive)
+        {
+            Debug.Log("Out of ammo (check on kill)");
+            sh.stop = true;
+            StartCoroutine(LoseAnimation());
+
+        }
+        else if(killCount == killObjetive)
+        {
+            Debug.Log("Stopping");
+            sh.stop = true;
+        }
+    }
+
     public IEnumerator LoseAnimation()
     {
         moveSpeed = 0;
         rotate = false;
-        sh.ammo = 0;
+        sh.recoilForce = 0;
         camPos.transition = true;
 
         while (true)
         {
-            print("Losing");
             if (timeDead < 1)
             {
                 timeDead += 0.05f;
@@ -56,7 +76,6 @@ public class Player : MonoBehaviour
     {
         while (true)
         {
-            print(timeDead);
             if (timeDead > 0)
             {
                 timeDead -= 0.05f;
@@ -65,10 +84,7 @@ public class Player : MonoBehaviour
             }
             else
             {
-                print(timeDead);
-                // load new scene here, get scene from scene settings
-                SceneManager.LoadScene("Level 1", LoadSceneMode.Single);
-                Debug.Log("Respawn finished.");
+                SceneManager.LoadScene(CurrentLevel, LoadSceneMode.Single);
                 yield break;
             }
         }
@@ -76,6 +92,14 @@ public class Player : MonoBehaviour
 
     void FixedUpdate()
     {
+        if (killObjetive == killCount)
+        {
+            rotate = false;
+            sh.recoilForce = 0;
+            // Add next level animation here
+            Invoke("NextLevel", 1f);
+        }
+
         if (rotate)
         {
             float rotate = (Mathf.Clamp((Mathf.Abs(moveVertical) + Mathf.Abs(moveHorizontal)), 0f, 1f) * rotateSpeed) + 1;
@@ -85,5 +109,10 @@ public class Player : MonoBehaviour
 
         rb2.AddForce(new Vector2(moveHorizontal, moveVertical) * Time.deltaTime * moveSpeed);
         transform.position = new Vector2(Mathf.Clamp(transform.position.x, -9.2f, 9.2f), Mathf.Clamp(transform.position.y, -5, 5));
+    }
+
+    private void NextLevel()
+    {
+        SceneManager.LoadScene(nextLevel, LoadSceneMode.Single);
     }
 }
