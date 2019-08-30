@@ -6,6 +6,7 @@ public class Shoot : MonoBehaviour
 {
     private Vector3 target;
     public CameraPos cPos;
+    public Player playerComp;
     public GameObject crosshair;
     public GameObject bullet;
     public GameObject bulletGuide;
@@ -16,6 +17,9 @@ public class Shoot : MonoBehaviour
     public float bulletRotate;
     public float recoilForce = 1f;
     private float nextFire;
+    public bool needsAmmo;
+    public bool stop;
+    private bool checkActive;
 
     private bool shoot;
 
@@ -26,6 +30,7 @@ public class Shoot : MonoBehaviour
     private void Start()
     {
         Cursor.visible = false;
+        playerComp = player.GetComponent<Player>();
     }
 
     private void Update()
@@ -33,11 +38,17 @@ public class Shoot : MonoBehaviour
         mouseX = Input.mousePosition.x;
         mouseY = Input.mousePosition.y;
 
-        if(Input.GetMouseButton(0) && ammo != 0 && Time.time > nextFire)
+        if(Input.GetMouseButton(0) && recoilForce != 0 && ammo != 0 && Time.time > nextFire && !stop && !checkActive)
         {
+            Debug.Log("Shot");
             nextFire = Time.time + fireRate;
             shoot = true;
             ammo--;
+        }
+        else if (recoilForce != 0 && needsAmmo && ammo == 0 && playerComp.killCount != playerComp.killObjetive && !stop && !checkActive)
+        {
+            checkActive = true;
+            StartCoroutine(OutOfAmmoCheck());
         }
     }
 
@@ -63,6 +74,18 @@ public class Shoot : MonoBehaviour
 
             shoot = false;
         }
+    }
+
+    IEnumerator OutOfAmmoCheck()
+    {
+        yield return new WaitForSeconds(1f);
+        if (ammo == 0 && playerComp.killCount != playerComp.killObjetive)
+        {
+            Debug.Log("Out of ammo (check on Coroutine)");
+            stop = true;
+            playerComp.StartCoroutine(playerComp.LoseAnimation());
+        }
+        checkActive = false;
     }
 
     private void LateUpdate()

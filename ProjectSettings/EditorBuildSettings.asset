@@ -5,7 +5,34 @@ EditorBuildSettings:
   m_ObjectHideFlags: 0
   serializedVersion: 2
   m_Scenes:
+  - enabled: 0
+    path: Assets/__DELETED_GUID_Trash/9fc0d4010bbf28b4594072e72b8655ab
+    guid: 9fc0d4010bbf28b4594072e72b8655ab
   - enabled: 1
     path: Assets/Scenes/Level 1.unity
-    guid: 9fc0d4010bbf28b4594072e72b8655ab
+    guid: f4374d03320db544085a1eb39e5ee42e
+  - enabled: 1
+    path: Assets/Scenes/Level 2.unity
+    guid: 2cf10e2ab4857f145b585eea5726fdab
+  - enabled: 1
+    path: Assets/Scenes/Level 3.unity
+    guid: 8e0a6915189a3364990e552a9fd8b621
+  - enabled: 1
+    path: Assets/Scenes/Level 4.unity
+    guid: a957a7c286553454fabedee61e8c1e94
+  - enabled: 1
+    path: Assets/Scenes/Level 5.unity
+    guid: 286ac8d03c0f4f44fbe6a5b14963aed9
+  - enabled: 1
+    path: Assets/Scenes/Level 6.unity
+    guid: 5f1d5bb811dfadc4ea895920be4a611c
+  - enabled: 1
+    path: Assets/Scenes/Level 7.unity
+    guid: 51193990e151c3146a18c423db1b0154
+  - enabled: 1
+    path: Assets/Scenes/Level 8.unity
+    guid: 01ef0fd80f0825542918eed0d2258ca5
+  - enabled: 1
+    path: Assets/Scenes/Level 9.unity
+    guid: 2ebc0048b368dfd419daa48d4a5e33d9
   m_configObjects: {}
