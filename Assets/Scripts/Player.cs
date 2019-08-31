@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using UnityEngine.UI;
 
 public class Player : MonoBehaviour
 {
@@ -16,6 +17,9 @@ public class Player : MonoBehaviour
     public int killObjetive;
     public int killCount;
 
+    public Text enemyCounter;
+    private int enemyCounterInt;
+
     public Shoot sh;
 
     private Rigidbody2D rb2;
@@ -27,6 +31,11 @@ public class Player : MonoBehaviour
         rb2 = GetComponent<Rigidbody2D>();
     }
 
+    private void Start()
+    {
+        enemyCounterInt = killObjetive;
+    }
+
     void Update()
     {
         moveHorizontal = Input.GetAxisRaw("Horizontal");
@@ -35,6 +44,12 @@ public class Player : MonoBehaviour
 
     public void AddKill()
     {
+        // enemy counter here
+        enemyCounterInt--;
+        if(enemyCounter)
+        {
+            enemyCounter.text = "Enemy\n" + enemyCounterInt;
+        }
         killCount += 1;
         if(sh.needsAmmo && sh.ammo == 0 && killCount != killObjetive)
         {
@@ -97,7 +112,7 @@ public class Player : MonoBehaviour
             rotate = false;
             sh.recoilForce = 0;
             // Add next level animation here
-            Invoke("NextLevel", 1f);
+            Invoke("NextLevel", 2f);
         }
 
         if (rotate)

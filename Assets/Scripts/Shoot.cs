@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class Shoot : MonoBehaviour
 {
@@ -20,6 +21,8 @@ public class Shoot : MonoBehaviour
     public bool needsAmmo;
     public bool stop;
     private bool checkActive;
+
+    public Text ammoCounter;
 
     private bool shoot;
 
@@ -44,6 +47,10 @@ public class Shoot : MonoBehaviour
             nextFire = Time.time + fireRate;
             shoot = true;
             ammo--;
+            if(needsAmmo)
+            {
+                ammoCounter.text = "AMMO\n" + ammo.ToString();
+            }
         }
         else if (recoilForce != 0 && needsAmmo && ammo == 0 && playerComp.killCount != playerComp.killObjetive && !stop && !checkActive)
         {
@@ -71,7 +78,6 @@ public class Shoot : MonoBehaviour
             b.GetComponent<Rigidbody>().velocity = direction * bulletSpeed;
             player.GetComponent<Rigidbody2D>().AddForce(-direction * recoilForce);
             b.GetComponent<Rigidbody>().AddTorque(1f * bulletRotate, 1f * bulletRotate, 1f * bulletRotate);
-
             shoot = false;
         }
     }
